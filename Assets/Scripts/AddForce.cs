@@ -13,6 +13,8 @@ public class AddForce : MonoBehaviour
     LineRenderer line;
     [SerializeField]
     Transform coneTransform;
+    [SerializeField]
+    bool showArrow = true;
 
     Transform target;
     float nextTime;
@@ -31,6 +33,14 @@ public class AddForce : MonoBehaviour
 
     private void Update()
     {
+        if (!showArrow && line.gameObject.activeInHierarchy)
+        {
+            line.gameObject.SetActive(false);
+            coneTransform.gameObject.SetActive(false);
+            // Disabling the script means that if you change <c>showArrow</c> back to true, you also must enable the script
+            enabled = false;
+            return;
+        }
         // editor arrow handle cap reproduced at runtime
         line.SetPosition(0, transform.position);
         line.SetPosition(1, transform.position + body.velocity);
